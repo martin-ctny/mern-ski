@@ -1,45 +1,31 @@
 import postsService from "../setup/services/post.service";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const PostList = () => {
-  const [posts, setPosts] = useState([]);
+const PostList = ({ posts }) => {
+  const naviguate = useNavigate();
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
-
-  const fetchPosts = async () => {
-    const response = await postsService.getPosts();
-
-    setPosts(response);
+  const handleClick = (e, _id) => {
+    e.preventDefault();
+    console.log(_id);
+    naviguate(`/posts/${_id}`);
   };
 
   return (
     <div className="map">
       {posts.map((post) => (
-        <div key={post.id}>
-          <h2>{post.title}</h2>
-          <h2>{post.imageUrl}</h2>
-          <h2>poids : {post.weight}</h2>
-          <h2>size : {post.size}</h2>
-          <h2>style : {post.style}</h2>
-          <h2>price : {post.price}</h2>
-          <h2>{post.description}</h2>
-          <h1>Commentaires :</h1>
-          {post.comments.map((revision) => (
-            <div key={revision.id}>
-              <h3>{revision.username}</h3>
-              <h3>{revision.description}</h3>
-              <h3>{revision.starts}</h3>
-              <h3>Disponible : {revision.isAvailable ? "non" : "oui"}</h3>
-            </div>
-          ))}
-          <h1>Booking :</h1>
-          {post.booking.map((booking) => (
-            <div key={booking.id}>
-              <h3>{booking.telephoneNumber}</h3>
-            </div>
-          ))}
+        <div className="card" key={post.id}>
+          <img src={post.imageUrl} alt="" />
+          <div className="right">
+            <h2>{post.title}</h2>
+            <h2>poids : {post.weight}</h2>
+            <h2>style : {post.style}</h2>
+            <h2>{post.price}€ / J</h2>
+            <h2>{post.size} cm</h2>
+            <h3>{post.description}</h3>
+            <h3>{post._id}</h3>
+            <button onClick={(e) => handleClick(e, post._id)}>Détails</button>
+          </div>
         </div>
       ))}
     </div>

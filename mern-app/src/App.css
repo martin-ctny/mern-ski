@@ -36,3 +36,19 @@
     transform: rotate(360deg);
   }
 }
+.card {
+  margin-top: 10px;
+  background-color: #61dafb;
+  display: flex;
+}
+.right {
+  display: flex;
+  padding: 10px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.details {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+}
