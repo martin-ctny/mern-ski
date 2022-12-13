@@ -1,9 +1,9 @@
-import postsService from "../setup/services/post.service";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const PostList = ({ posts }) => {
   const naviguate = useNavigate();
+  const [search, setSearch] = useState("");
 
   const handleClick = (e, _id) => {
     e.preventDefault();
@@ -11,8 +11,17 @@ const PostList = ({ posts }) => {
     naviguate(`/posts/${_id}`);
   };
 
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+    console.log(search);
+  };
+  const filteredTitle = posts.filter((post) =>
+    post.title.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <div className="map">
+      <input onChange={handleSearch} type="rechercher" />{" "}
       {posts.map((post) => (
         <div className="card" key={post.id}>
           <img src={post.imageUrl} alt="" />

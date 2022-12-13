@@ -7,15 +7,15 @@ import postsService from "./setup/services/post.service";
 
 function App() {
   const [posts, setPosts] = useState([]);
-  useEffect(() => {
-    fetchPosts();
-  }, []);
 
   const fetchPosts = async () => {
     const response = await postsService.getPosts();
-
     setPosts(response);
   };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   return (
     <>

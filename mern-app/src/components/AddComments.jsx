@@ -1,28 +1,32 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 
-const AddComments = () => {
-  const { _id } = useParams();
+import postsService from "../setup/services/post.service";
 
+const AddComments = ({ fetchPost, id }) => {
   const [newComments, setNewComments] = useState({
     username: "",
     description: "",
     starts: "",
-    posts: _id,
+    post: id,
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewComments({ ...newComments, [name]: value });
+    console.log(id);
   };
 
   const handleClick = (e) => {
-    e.preventDefault();
-    // post comments
+    e.stopPropagation();
+    postsService.postComments(newComments).then((res) => {
+      console.log(res);
+    });
+    setNewComments({ ...newComments, posts: id });
+    fetchPost();
   };
 
   return (
-    <form action="submit" onClick={handleClick}>
+    <form>
       <input
         type="text"
         name="username"
@@ -41,7 +45,9 @@ const AddComments = () => {
         onChange={(e) => handleChange(e)}
         placeholder="stars"
       />
-      <button type="submit">Ajouter un commentaire</button>
+      <button type="submit" onClick={handleClick}>
+        Ajouter un commentaire
+      </button>
     </form>
   );
 };
