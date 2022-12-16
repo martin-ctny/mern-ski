@@ -17,7 +17,6 @@ const AddComments = ({ fetchPost, id }) => {
   };
 
   const handleClick = (e) => {
-    e.stopPropagation();
     postsService.postComments(newComments).then((res) => {
       console.log(res);
     });
